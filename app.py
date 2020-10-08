@@ -47,7 +47,6 @@ drive_s3_df.head()
 
 # PART 2 - Split and train the model
 
-import matplotlib.pyplot as plt
 from sklearn.preprocessing import LabelEncoder
 
 exp_df = df.copy()
@@ -108,7 +107,6 @@ feat_df.head()
 # PART 3 - Pre-processing after feature selection
 
 join_test_df = y_test.join(X_test, how='outer')
-join_train_df = y_train.join(X_train, how='outer')
 
 # # Merge X and y data into one df for correlation matrix
 # df = y_train.join(X_train, how='outer')
@@ -211,7 +209,46 @@ print(f"MSE: {MSE}, R2: {r2}")
 print("Note: not much difference between StandardScaler and MinMaxScaler")
 
 
+#################################################
+# Flask Setup
+#################################################
 
+# import necessary libraries
+from flask_sqlalchemy import SQLAlchemy
+from flask import (
+    Flask,
+    render_template,
+    request,
+    redirect,
+    url_for)
+import pandas as pd
+from sqlalchemy import create_engine
+import psycopg2
+import collections
+import json
+
+app = Flask(__name__)
+
+
+#################################################
+# Database Setup
+#################################################
+# engine = create_engine("postgres://ksbyesziginjim:604e43369bb88e70d12bfdff3c853e100e75e5049e4633240a1a6a3f4c01931a@ec2-54-172-173-58.compute-1.amazonaws.com:5432/d5r20gklffimtp")
+engine = create_engine("mydbinstance.ctczmehsofuc.eu-west-2.rds.amazonaws.com")
+# create route that renders index.html template
+@app.route("/")
+
+def test_function():
+    rows = engine.execute("select 'tBodyAcc-IQR-3', activity from test_df")
+    costbystate_list = []
+    for row in rows:
+        costbystate = collections.OrderedDict()
+        costbystate['name'] = row[0]
+        costbystate['total_damage'] = row[1]
+        costbystate_list.append(costbystate)
+    costbystate_js = json.dumps(costbystate_list)
+    return costbystate_js
+test_function()
 
 
 

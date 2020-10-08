@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Atlantic Hurricanes</title>
+    <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
+    <!-- Font Awesome icons (free version)-->
+    <script src="https://use.fontawesome.com/releases/v5.13.0/js/all.js" crossorigin="anonymous"></script>
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+        integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+        crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+        integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+        crossorigin=""></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+        integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+        crossorigin="" />
+
+</head>
+
+<body id="page-top">
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand js-scroll-trigger" href="#page-top">Rice University Data Camp | Project II</a>
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+                data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+                aria-label="Toggle navigation">
+                Menu
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#about">About</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#aboutplot">Fatalities</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#aboutcost">Cost</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#aboutscatter">Scatter</a></li>
+                    <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#aboutgeomap">Geomap</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- Masthead-->
+    <header class="masthead">
+        <div class="container d-flex h-100 align-items-center">
+            <div class="mx-auto text-center">
+                <h1 class="mx-auto my-0 text-uppercase">Atlantic</h1>
+                <h1 class="mx-auto my-0 text-uppercase">Hurricanes</h1>
+                <h2 class="text-white-50 mx-auto mt-2 mb-5">Project II Group 5</h2>
+                <h2 class="text-white-50 mx-auto mt-2 mb-5">Amy, Clay, Irina & Neil</h2>
+            </div>
+        </div>
+    </header>
+    <!-- About-->
+
+    <section class="about-section text-center" id="about">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <h2 class="text-white mb-4">Introduction to the project</h2>
+                    <h3 class="text-white-50">
+                        The catastrophic Hurricane Laura made landfall on August 27th, 2020 in Cameron, Louisiana with a
+                        maximum wind speed of 150 mph, causing 71 fatalities and over $10 billion (USD) in damage.
+                    </h3><br>
+                    <h3 class="text-white-50">
+                        This hurricane was personal to our team because it had a strong chance of vearing further west
+                        towards Houston, and there was a mandadory evactuation of Galveston Island.
+                    </h3><br>
+                    <h3 class="text-white-50">
+                        After this scare, we decided to form our project around the costliest Atlantic Hurricanes over
+                        the
+                        last 40 years, and study how wind speed and landfall locations impact damage and cost to the
+                        states affected.
+                    </h3><br>
+                    <h3 class="text-white-50">
+                        Please join us in this review the historical Atlantic hurricanes data.
+                    </h3><br>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="bottomspace" style="height:250px; background-color: rgba(0, 0, 0, 0.8);"></section>
+
+    <section id="aboutplot"></section>
+
+    <h4 style="text-align:center; padding-top:60px;padding-bottom:60px;background-color: #7d0633; color:white;">Deadliest Hurricanes in the history</h4>
+
+    <div class="container">
+        <div class="chloropleth-plot">
+            <div class="row">
+                <div class="col-md-6">
+                    <div id="plot"></div>
+                </div>
+                <div class="col-md-6"><br><br>
+                    <p>In display of power and destruction, Hurricane <strong> Mitch</strong> will be remembered as the most deadly hurricane to strike the Western Hemisphere in the last two centuries! Not since the Great Hurricane of 1780, which killed approximately 22,000 people in the eastern Caribbean, was there a more deadly hurricane. 
+                    </p>
+                    <p>The death toll currently is reported as 11,000 with thousands of others missing. Though the final death toll will never be known, it is quite likely that Mitch directly killed more people than any Atlantic hurricane in over 200 years.
+                    </p>
+                    <p>Hurricanes wouldn’t be such a big deal if they didn’t hit land. Once a hurricane makes landfall, all those on land are subject to its many dangers like storm surge and flooding. The Caribbean, Atlantic coastal areas, and Gulf of Mexico coastal areas are at risk each year. While these areas are all at risk, there are certain regions that see more hurricanes than others. 
+                    </p>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+    <section class="bottomspace"></section>
+    
+    <section id="aboutcost"></section>
+    <h4 style="text-align:center; padding-top:60px;padding-bottom:60px;background-color: coral; color:white;">Damages
+        overview - US by states (1980 - 2019) </h4>
+    <div class="container">
+        <div class="chloropleth">
+            <div class="row">
+                <div class="col-md-4"><br><br>
+                    <p>The three states that sustained the most damage from hurricanes over the last 40 years in the US
+                        are <strong>Texas</strong> ($255 billion USD),
+                        <strong>Florida</strong> ($210 billion USD), and <strong>Louisiana</strong> ($180 billion USD).
+                        Mississippi, North Carolina, and New York encountered an average of $55 billion in damages.
+                    </p>
+                    <p>Notice the Northwest of the US has taken very little damage from hurricanes, while
+                        the Southeast has been hit very hard. Hurricanes in the Northwest Pacific almost never make
+                        landfall, whereas the Atlantic basin hurricanes strike the US mainland nearly twice a
+                        year on
+                        average. One reason for this is the temperature of the water the hurricanes move over.
+                    </p>
+                    <p>The Gulf Stream provides a source of warm water, above 80 degrees Fahrenheit, which helps
+                        maintain a hurricanes strength in the Atlantic. Along the West Coast, ocean temperatures rarely
+                        rise above 70 degrees Fahrenheit which do not provide enough thermal energy to sustain a
+                        hurricane's
+                        strength.
+                    </p>
+                </div>
+                <div class="col-md-8">
+                    <div id="costmap"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section id="aboutscatter">
+    </section>
+
+    <h4 style="text-align: center; padding-top:60px;padding-bottom:60px;background-color: #28DF99; color:white;">
+        Hurricane Wind Speeds vs. Cost</h4>
+    <div class="bottomspace"></div>
+    <div class="container">
+        <div class="scatter-plot">
+            <div class="row">
+                <div class="col-md-6">
+                    <canvas id="myChart" width="100" height="100"></canvas>
+                </div>
+                <div class="col-md-6"><br><br>
+                    <p>Here we can see the Top 10 Costliest Atlantic Hurricanes in the history of the United States. Interestingly, outside of Hurricane Andrew in 1992, 9 of the 10 Costliest Atlantic Hurricanes in US history have occurred in the last twenty years.</p>
+                    <p>As you can see from the chart, Hurricane Harvey and Katrina have tied for the Costliest Atlantic Hurricanes despite having vastly different Maximum Wind Speeds.  Although the chart shows a slightly upward correlation between wind speed and damages, clearly there are other variables at play as well.  Harvey and Sandy illustrate this point - despite being the two lowest in max wind speed of the hurricanes displayed here, they still ranked #1 and #4 in total damages respectively.</p>
+                    <p>Often when we are following the news of an impending hurricane, we fixate on the hurricane category, which is determined by the wind speed - but the discussion should be in tandem with other variables.  Sandy - for example, despite not being an incredibly powerful hurricane, rocked our nation's financial center leaving Wall Street in shambles.  Similarly - Harvey's damage was heavily due to its sluggish pace as it moved across the Gulf coast, dumping record amounts of water resulting in catastrophic flooding in its path.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="bottomspace"></section>
+    <section id="aboutgeomap"></section>
+    
+    <div
+        style="text-align: center; font-weight: bold; font-size:24px; padding-top:60px;padding-bottom:60px;background-color: #E79CC2; color:white; size:20px;">
+        Top 10 Costliest Hurricanes Paths</div>
+
+    <!-- <div> -->
+    <!-- <div class = "col-md-12"> -->
+    <div id="geomap"></div>
+    <!-- </div> -->
+    <!-- </div> -->
+    
+    <h4 style="text-align:center; padding-top:60px;padding-bottom:60px;background-color: #4e89ae; color:white;"></h4>
+
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/config.js') }}"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.min.js"></script>
+    <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script> -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <!-- CSS only -->
+
+    <!-- JS, Popper.js, and jQuery -->
+    <!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script> -->
+
+    <!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script> -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
+
+
+    <!-- Navigation bar at the bottom  -->
+    <nav class="navbar fixed-bottom navbar-expand-sm navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Atlantic Hurricanes</a>
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" target=“_blank” href="/data">Master data</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" target=“_blank” href="https://github.com/IrinaUX/project2_heroku">GitHub</a>
+            </li>
+        </ul>
+    </nav>
+</body>
+
+</html>
