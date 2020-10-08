@@ -8,7 +8,6 @@ This is project 3 of RICE Data Analytics and Vizualizations bootcamps
 import pandas as pd
 import numpy as np
 import math
-%matplotlib inline
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler
 
@@ -49,7 +48,6 @@ drive_s3_df.head()
 # PART 2 - Split and train the model
 
 import matplotlib.pyplot as plt
-import seaborn as sns
 from sklearn.preprocessing import LabelEncoder
 
 exp_df = df.copy()
@@ -64,6 +62,10 @@ exp_df['Activity'] = le.fit_transform(exp_df['Activity'].astype(str))
 
 # Create a random forest classifier
 clf = RandomForestClassifier(n_estimators=200)
+
+# Change shape of y_train
+y_train = y_train.values.reshape(-1, 1)
+y_train = y_train.flatten()
 
 # Train the model using the training sets y_pred=clf.predict(X_test)
 clf.fit(X_train,y_train)
@@ -108,7 +110,9 @@ feat_df.head()
 join_test_df = y_test.join(X_test, how='outer')
 join_train_df = y_train.join(X_train, how='outer')
 
-combined_df = pd.concat([join_test_df, join_train_df])
+# # Merge X and y data into one df for correlation matrix
+# df = y_train.join(X_train, how='outer')
+combined_df = pd.concat([join_test_df, df])
 
 from sklearn.model_selection import train_test_split
 
